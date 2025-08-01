@@ -36,6 +36,11 @@
     <button id="writeBtn" class="w-full bg-[#D81A60] hover:bg-[#b81652] text-white font-bold py-4 px-8 rounded-full text-xl transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg focus:outline-none focus:ring-4 focus:ring-[#D81A60]/50 dark:focus:ring-[#D81A60]/60 disabled:bg-gray-400 dark:disabled:bg-gray-600 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none">
       Tap to Register
     </button>
+
+    <!-- New Close Tab Button -->
+    <button id="closeTabBtn" class="mt-4 w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-full text-lg transition-colors duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-500/50">
+      Close Tab
+    </button>
   </div>
 
   <!-- Custom Modal for Notifications -->
@@ -52,6 +57,7 @@
     // --- DOM Element References ---
     const displayElement = document.getElementById('display');
     const writeButton = document.getElementById('writeBtn');
+    const closeTabButton = document.getElementById('closeTabBtn'); // New button reference
     const modal = document.getElementById('modal');
     const modalMessage = document.getElementById('modal-message');
     const modalContent = document.getElementById('modal-content');
@@ -86,6 +92,13 @@
       if (event.target === modal) {
         modal.classList.add('hidden');
       }
+    };
+
+    // New: Handle the close tab button click
+    closeTabButton.onclick = () => {
+      // This will attempt to close the current window/tab.
+      // Note: This may not work in all browsers or contexts, especially if the tab was not opened by a script.
+      window.close();
     };
 
     // --- Main Application Logic ---
