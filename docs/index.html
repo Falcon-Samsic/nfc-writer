@@ -5,22 +5,34 @@
   <title>NFC Writer</title>
 </head>
 <body>
-  <h2>NFC-Write: </h2>
+  <h2>NFC-Write:</h2>
   <p id="display">Preparing…</p>
   <button id="writeBtn">Tap to Write Tag</button>
 
   <script>
-    // 1️⃣ Grab the “val” parameter from the URL
+    // Grab the “val” param as before
     const params = new URLSearchParams(location.search);
-    const val   = params.get('val') || '';
-    document.getElementById('display').textContent = `Value → ${val}`;
+    const val    = params.get('val') || '';
+    document.getElementById('display')
+            .textContent = `Value → ${val}`;
 
-    // 2️⃣ On button-click, ask Web NFC to write it
+    // Feature-detect Web NFC
+    if (!('NDEFReader' in window)) {
+      document.getElementById('display')
+              .textContent = 'Web NFC not supported on this device/browser.';
+      document.getElementById('writeBtn').disabled = true;
+    }
+
+    // Use NDEFReader instead of navigator.nfc
     document.getElementById('writeBtn').onclick = async () => {
       try {
-        await navigator.nfc.write({
-          records: [{ recordType: 'text', data: val }]
-        });
+        const ndef = new NDEFReader();
+        // You can either pass a simple string:
+        await ndef.write(val);
+        // Or a record:
+        // await ndef.write({
+        //   records: [{ recordType: 'text', data: val }]
+        // });
         alert('✅ Written: ' + val);
       } catch (e) {
         alert('❌ NFC write failed:\n' + e);
